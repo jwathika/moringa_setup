@@ -65,16 +65,6 @@ if ! is_command_available "code"; then
   if is_command_available "snap"; then
     echo "Installing VSCode using snap..."
     sudo snap install code --classic
-    # incase snap is not in the path
-  # else
-  #   if ! is_command_available "wget"; then
-  #     install_package "wget"
-  #   fi
-  #   echo "Installing VSCode from alternative source..."
-  #   wget -O /tmp/code.deb https://go.microsoft.com/fwlink/?LinkID=760868
-  #   sudo dpkg -i /tmp/code.deb
-  #   sudo apt-get install -y
-  # fi
 fi
 print_table_results "Installed VSCode" "is_command_available 'code'"
 
