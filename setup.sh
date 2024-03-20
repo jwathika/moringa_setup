@@ -72,7 +72,7 @@ if ! is_command_available "code"; then
     echo "Installing VSCode from alternative source..."
     wget -O /tmp/code.deb https://go.microsoft.com/fwlink/?LinkID=760868
     sudo dpkg -i /tmp/code.deb
-    sudo apt-get install -f -y
+    sudo apt-get install -y
   fi
 fi
 print_table_results "Installed VSCode" "is_command_available 'code'"
