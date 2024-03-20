@@ -62,9 +62,12 @@ delimiter
 
 # Check and install VS Code
 if ! is_command_available "code"; then
-  install_package "code"
+  if ! is_command_available "snap"; then
+    install_package "snapd"
+  fi
+  sudo snap install code --classic
 fi
-print_table_results "Installed VSCode" "command -v code >/dev/null 2>&1 && code -v | grep -q '1.'"
+print_table_results "Installed VSCode" "is_command_available 'code'"
 
 # Check and install NVM
 if ! is_command_available "nvm"; then
