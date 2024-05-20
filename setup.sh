@@ -144,4 +144,4 @@ echo 'eval "$(pyenv init --path)"' >> ~/.bashrc
 echo 'eval "$(pyenv init -)"' >> ~/.bashrc
 
 # Inform user to close and reopen terminal
-echo -e "${CYAN}Please close and reopen your terminal to apply the changes.${NC}"
+echo -e "${CYAN}Please close and reopen your terminal to apply the changes. Run sudo apt install pipenv -y afterwards${NC}"
