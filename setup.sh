@@ -136,3 +136,12 @@ echo "Github User Configuration:"
 print_data_row "Name" "command -v git >/dev/null 2>&1 && git config user.name"
 print_data_row "Email" "command -v git >/dev/null 2>&1 && git config user.email"
 delimiter
+
+# Add pyenv initialization to bashrc
+echo 'export PYENV_ROOT="$HOME/.pyenv"' >> ~/.bashrc
+echo 'command -v pyenv >/dev/null || export PATH="$PYENV_ROOT/bin:$PATH"' >> ~/.bashrc
+echo 'eval "$(pyenv init --path)"' >> ~/.bashrc
+echo 'eval "$(pyenv init -)"' >> ~/.bashrc
+
+# Inform user to close and reopen terminal
+echo -e "${CYAN}Please close and reopen your terminal to apply the changes.${NC}"
