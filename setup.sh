@@ -54,6 +54,12 @@ configuration_header () {
   printf "\n${CYAN}************* CONFIGURATION **************${NC}\n\n"
 }
 
+# Update and install build dependencies
+sudo apt update
+sudo apt install -y build-essential libssl-dev zlib1g-dev libbz2-dev \
+libreadline-dev libsqlite3-dev curl git libncursesw5-dev xz-utils tk-dev \
+libxml2-dev libxmlsec1-dev libffi-dev liblzma-dev
+
 # Validation
 validation_header
 delimiter
@@ -69,7 +75,7 @@ print_table_results "Installed VSCode" "is_command_available 'code'"
 
 # Check and install NVM
 if ! is_command_available "nvm"; then
-  curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.1/install.sh | bash
+  curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.7/install.sh | bash
   . ~/.nvm/nvm.sh
 fi
 print_table_results "Installed NVM" "is_command_available 'nvm'"
@@ -86,8 +92,36 @@ if ! is_command_available "python3"; then
 fi
 print_table_results "Installed Python3" "is_command_available 'python3'"
 
-## 4. git
-# https://stackoverflow.com/questions/12254076/how-do-i-show-my-global-git-config
+# Check and install pyenv
+if ! is_command_available "pyenv"; then
+  curl https://pyenv.run | bash
+  echo 'export PYENV_ROOT="$HOME/.pyenv"' >> ~/.bashrc
+  echo 'command -v pyenv >/dev/null || export PATH="$PYENV_ROOT/bin:$PATH"' >> ~/.bashrc
+  echo 'eval "$(pyenv init --path)"' >> ~/.bashrc
+  echo 'eval "$(pyenv init -)"' >> ~/.bashrc
+  . ~/.bashrc
+fi
+print_table_results "Installed pyenv" "is_command_available 'pyenv'"
+
+# Check and install pipx
+if ! is_command_available "pipx"; then
+  sudo apt update
+  sudo apt install -y pipx
+  pipx ensurepath
+  sudo pipx ensurepath --global
+fi
+print_table_results "Installed pipx" "is_command_available 'pipx'"
+
+# Check and install pipenv
+if ! is_command_available "pipenv"; then
+  pipx install pipenv
+fi
+print_table_results "Installed pipenv" "is_command_available 'pipenv'"
+
+# Check and install git
+if ! is_command_available "git"; then
+  install_package "git"
+fi
 print_table_results "Installed git" "command -v git >/dev/null 2>&1 && git version | grep -q 'git version'"
 delimiter
 
@@ -101,5 +135,4 @@ print_table_results "Github email config" "command -v git >/dev/null 2>&1 && git
 echo "Github User Configuration:"
 print_data_row "Name" "command -v git >/dev/null 2>&1 && git config user.name"
 print_data_row "Email" "command -v git >/dev/null 2>&1 && git config user.email"
-#echo "Made with ..."
 delimiter
